@@ -76,6 +76,9 @@ int       CondLikeRoot_Gen (TreeNode *p, int division, int chain);
 #if defined (SSE_ENABLED)
 int       CondLikeRoot_Gen_SSE (TreeNode *p, int division, int chain);
 #endif
+#if defined (FMA_ENABLED)
+int       CondLikeRoot_NUC4_FMA (TreeNode *p, int division, int chain);
+#endif
 int       CondLikeRoot_Gen_GibbsGamma (TreeNode *p, int division, int chain);
 int       CondLikeRoot_NUC4 (TreeNode *p, int division, int chain);
 #if defined (SSE_ENABLED)
@@ -116,6 +119,9 @@ int       Likelihood_Gen_GibbsGamma (TreeNode *p, int division, int chain, MrBFl
 int       Likelihood_NUC4 (TreeNode *p, int division, int chain, MrBFlt *lnL, int whichSitePats);
 #if defined (SSE_ENABLED)
 int       Likelihood_NUC4_SSE (TreeNode *p, int division, int chain, MrBFlt *lnL, int whichSitePats);
+#endif
+#if defined (FMA_ENABLED)
+int       Likelihood_NUC4_FMA (TreeNode *p, int division, int chain, MrBFlt *lnL, int whichSitePats);
 #endif
 int       Likelihood_NUC4_GibbsGamma (TreeNode *p, int division, int chain, MrBFlt *lnL, int whichSitePats);
 int       Likelihood_NY98 (TreeNode *p, int division, int chain, MrBFlt *lnL, int whichSitePats);

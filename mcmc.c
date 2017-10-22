@@ -17920,6 +17920,10 @@ int SetLikeFunctions (void)
                             m->CondLikeDown = &CondLikeDown_NUC4_SSE;
                             m->CondLikeRoot = &CondLikeRoot_NUC4_SSE;
                             m->CondLikeScaler = &CondLikeScaler_NUC4_SSE;
+    #if defined (FMA_ENABLED)   // override AVX settings (CondLikeScaler cannot be improved over AVX)
+                            m->CondLikeDown = &CondLikeDown_NUC4_FMA;
+                            m->CondLikeRoot = &CondLikeRoot_NUC4_FMA;
+    #endif
                             /* Should be sse versions if we want to handle m->printAncStates == YES || inferSiteRates == YES.
                             For now just set to NULL for early error detection if functions anyway got called by mistake */
                             m->CondLikeUp = NULL;
@@ -17935,6 +17939,9 @@ int SetLikeFunctions (void)
                             m->Likelihood = &Likelihood_NUC4;
                         else
                             m->Likelihood = &Likelihood_NUC4_SSE;
+    #if defined (FMA_ENABLED) //overide AVX settings 
+                            m->Likelihood = &Likelihood_NUC4_FMA;
+    #endif
 #   else
                         if (m->gibbsGamma == YES)
                             {

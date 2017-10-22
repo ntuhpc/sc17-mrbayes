@@ -45,3 +45,4 @@
 #define OPENMP 0
 
 #define MPI_ENABLED 1
+#define FMA_ENABLED 1

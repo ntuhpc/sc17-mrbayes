@@ -1209,6 +1209,142 @@ int CondLikeDown_NUC4_GibbsGamma (TreeNode *p, int division, int chain)
 
     return NO_ERROR;
 }
+
+#if defined (FMA_ENABLED)
+/*----------------------------------------------------------------
+ |
+ |   CondLikeDown_NUC4_FMA: 4by4 nucleotide model with or without rate
+ |       variation, using AVX + FMA instructions
+ |
+ -----------------------------------------------------------------*/
+int CondLikeDown_NUC4_FMA (TreeNode *p, int division, int chain)
+{
+    int             c, k;
+    CLFlt           *pL, *pR, *tiPL, *tiPR;
+    __m256          *clL, *clR, *clP;
+    __m256          m1, m2, m3, m4;
+    ModelInfo       *m;
+    
+    m = &modelSettings[division];
+    
+    /* flip state of node so that we are not overwriting old cond likes */
+    FlipCondLikeSpace (m, chain, p->index);
+    
+    /* find conditional likelihood pointers */
+    clL = (__m256 *) m->condLikes[m->condLikeIndex[chain][p->left->index ]];
+    clR = (__m256 *) m->condLikes[m->condLikeIndex[chain][p->right->index]];
+    clP = (__m256 *) m->condLikes[m->condLikeIndex[chain][p->index       ]];
+    
+    /* find transition probabilities */
+    pL = m->tiProbs[m->tiProbsIndex[chain][p->left->index ]];
+    pR = m->tiProbs[m->tiProbsIndex[chain][p->right->index]];
+    
+    tiPL = pL;
+    tiPR = pR;
+    for (k=0; k<m->numGammaCats; k++)
+    {
+        for (c=0; c<m->numSSEChars; c++)
+        {
+            m1 = _mm256_broadcast_ss (&tiPL[AA]);
+            m2 = _mm256_broadcast_ss (&tiPR[AA]);
+            m3 = _mm256_mul_ps (m1, clL[A]);
+            m4 = _mm256_mul_ps (m2, clR[A]);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[AC]);
+            m2 = _mm256_broadcast_ss (&tiPR[AC]);
+            m3 = _mm256_fmadd_ps (m1, clL[C], m3);
+            m4 = _mm256_fmadd_ps (m2, clR[C], m4);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[AG]);
+            m2 = _mm256_broadcast_ss (&tiPR[AG]);
+            m3 = _mm256_fmadd_ps (m1, clL[G], m3);
+            m4 = _mm256_fmadd_ps (m2, clR[G], m4);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[AT]);
+            m2 = _mm256_broadcast_ss (&tiPR[AT]);
+            m3 = _mm256_fmadd_ps (m1, clL[T], m3);
+            m4 = _mm256_fmadd_ps (m2, clR[T], m4);
+            
+            *clP++ = _mm256_mul_ps (m3, m4);
+
+            m1 = _mm256_broadcast_ss (&tiPL[CA]);
+            m2 = _mm256_broadcast_ss (&tiPR[CA]);
+            m3 = _mm256_mul_ps (m1, clL[A]);
+            m4 = _mm256_mul_ps (m2, clR[A]);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[CC]);
+            m2 = _mm256_broadcast_ss (&tiPR[CC]);
+            m3 = _mm256_fmadd_ps (m1, clL[C], m3);
+            m4 = _mm256_fmadd_ps (m2, clR[C], m4);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[CG]);
+            m2 = _mm256_broadcast_ss (&tiPR[CG]);
+            m3 = _mm256_fmadd_ps (m1, clL[G], m3);
+            m4 = _mm256_fmadd_ps (m2, clR[G], m4);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[CT]);
+            m2 = _mm256_broadcast_ss (&tiPR[CT]);
+            m3 = _mm256_fmadd_ps (m1, clL[T], m3);
+            m4 = _mm256_fmadd_ps (m2, clR[T], m4);
+            
+            *clP++ = _mm256_mul_ps (m3, m4);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[GA]);
+            m2 = _mm256_broadcast_ss (&tiPR[GA]);
+            m3 = _mm256_mul_ps (m1, clL[A]);
+            m4 = _mm256_mul_ps (m2, clR[A]);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[GC]);
+            m2 = _mm256_broadcast_ss (&tiPR[GC]);
+            m3 = _mm256_fmadd_ps (m1, clL[C], m3);
+            m4 = _mm256_fmadd_ps (m2, clR[C], m4);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[GG]);
+            m2 = _mm256_broadcast_ss (&tiPR[GG]);
+            m3 = _mm256_fmadd_ps (m1, clL[G], m3);
+            m4 = _mm256_fmadd_ps (m2, clR[G], m4);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[GT]);
+            m2 = _mm256_broadcast_ss (&tiPR[GT]);
+            m3 = _mm256_fmadd_ps (m1, clL[T], m3);
+            m4 = _mm256_fmadd_ps (m2, clR[T], m4);
+            
+            *clP++ = _mm256_mul_ps (m3, m4);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[TA]);
+            m2 = _mm256_broadcast_ss (&tiPR[TA]);
+            m3 = _mm256_mul_ps (m1, clL[A]);
+            m4 = _mm256_mul_ps (m2, clR[A]);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[TC]);
+            m2 = _mm256_broadcast_ss (&tiPR[TC]);
+            m3 = _mm256_fmadd_ps (m1, clL[C], m3);
+            m4 = _mm256_fmadd_ps (m2, clR[C], m4);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[TG]);
+            m2 = _mm256_broadcast_ss (&tiPR[TG]);
+            m3 = _mm256_fmadd_ps (m1, clL[G], m3);
+            m4 = _mm256_fmadd_ps (m2, clR[G], m4);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[TT]);
+            m2 = _mm256_broadcast_ss (&tiPR[TT]);
+            m3 = _mm256_fmadd_ps (m1, clL[T], m3);
+            m4 = _mm256_fmadd_ps (m2, clR[T], m4);
+            
+            *clP++ = _mm256_mul_ps (m3, m4);
+            
+            clL += 4;
+            clR += 4;
+        }
+        tiPL += 16;
+        tiPR += 16;
+    }
+    
+    return NO_ERROR;
+    
+}
+#endif
+
 #if defined (SSE_ENABLED)
 /*----------------------------------------------------------------
  |
@@ -3496,6 +3632,182 @@ int CondLikeRoot_NUC4_GibbsGamma (TreeNode *p, int division, int chain)
 
     return NO_ERROR;
 }
+
+
+#if defined (FMA_ENABLED)
+/*----------------------------------------------------------------
+ |
+ |   CondLikeRoot_NUC4_FMA: 4by4 nucleotide model with or without rate
+ |       variation using AVX + FMA instructions
+ |
+ -----------------------------------------------------------------*/
+int CondLikeRoot_NUC4_FMA (TreeNode *p, int division, int chain)
+{
+    int             c, k;
+    CLFlt           *pL, *pR, *pA, *tiPL, *tiPR, *tiPA;
+    __m256          *clL, *clR, *clP, *clA;
+    __m256          m1, m2, m3, m4, m5, m6;
+    ModelInfo       *m;
+    
+    m = &modelSettings[division];
+    
+    /* flip state of node so that we are not overwriting old cond likes */
+    FlipCondLikeSpace (m, chain, p->index);
+    
+    /* find conditional likelihood pointers */
+    clL = (__m256 *) m->condLikes[m->condLikeIndex[chain][p->left->index ]];
+    clR = (__m256 *) m->condLikes[m->condLikeIndex[chain][p->right->index]];
+    clP = (__m256 *) m->condLikes[m->condLikeIndex[chain][p->index       ]];
+    clA = (__m256 *) m->condLikes[m->condLikeIndex[chain][p->anc->index  ]];
+    
+    /* find transition probabilities */
+    pL = m->tiProbs[m->tiProbsIndex[chain][p->left->index ]];
+    pR = m->tiProbs[m->tiProbsIndex[chain][p->right->index]];
+    pA = m->tiProbs[m->tiProbsIndex[chain][p->index       ]];
+    
+    tiPL = pL;
+    tiPR = pR;
+    tiPA = pA;
+    for (k=0; k<m->numGammaCats; k++)
+    {
+        for (c=0; c<m->numSSEChars; c++)
+        {
+            m1 = _mm256_broadcast_ss (&tiPL[AA]);
+            m2 = _mm256_broadcast_ss (&tiPR[AA]);
+            m3 = _mm256_broadcast_ss (&tiPA[AA]);
+            m4 = _mm256_mul_ps (m1, clL[A]);
+            m5 = _mm256_mul_ps (m2, clR[A]);
+            m6 = _mm256_mul_ps (m3, clA[A]);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[AC]);
+            m2 = _mm256_broadcast_ss (&tiPR[AC]);
+            m3 = _mm256_broadcast_ss (&tiPA[AC]);
+            m4 = _mm256_fmadd_ps (m1, clL[C], m4);
+            m5 = _mm256_fmadd_ps (m2, clR[C], m5);
+            m6 = _mm256_fmadd_ps (m3, clA[C], m6);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[AG]);
+            m2 = _mm256_broadcast_ss (&tiPR[AG]);
+            m3 = _mm256_broadcast_ss (&tiPA[AG]);
+            m4 = _mm256_fmadd_ps (m1, clL[G], m4);
+            m5 = _mm256_fmadd_ps (m2, clR[G], m5);
+            m6 = _mm256_fmadd_ps (m3, clA[G], m6);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[AT]);
+            m2 = _mm256_broadcast_ss (&tiPR[AT]);
+            m3 = _mm256_broadcast_ss (&tiPA[AT]);
+            m4 = _mm256_fmadd_ps (m1, clL[T], m4);
+            m5 = _mm256_fmadd_ps (m2, clR[T], m5);
+            m6 = _mm256_fmadd_ps (m3, clA[T], m6);
+            
+            m4 = _mm256_mul_ps (m4, m5);
+            *clP++ = _mm256_mul_ps (m4, m6);
+           
+            m1 = _mm256_broadcast_ss (&tiPL[CA]);
+            m2 = _mm256_broadcast_ss (&tiPR[CA]);
+            m3 = _mm256_broadcast_ss (&tiPA[CA]);
+            m4 = _mm256_mul_ps (m1, clL[A]);
+            m5 = _mm256_mul_ps (m2, clR[A]);
+            m6 = _mm256_mul_ps (m3, clA[A]);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[CC]);
+            m2 = _mm256_broadcast_ss (&tiPR[CC]);
+            m3 = _mm256_broadcast_ss (&tiPA[CC]);
+            m4 = _mm256_fmadd_ps (m1, clL[C], m4);
+            m5 = _mm256_fmadd_ps (m2, clR[C], m5);
+            m6 = _mm256_fmadd_ps (m3, clA[C], m6);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[CG]);
+            m2 = _mm256_broadcast_ss (&tiPR[CG]);
+            m3 = _mm256_broadcast_ss (&tiPA[CG]);
+            m4 = _mm256_fmadd_ps (m1, clL[G], m4);
+            m5 = _mm256_fmadd_ps (m2, clR[G], m5);
+            m6 = _mm256_fmadd_ps (m3, clA[G], m6);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[CT]);
+            m2 = _mm256_broadcast_ss (&tiPR[CT]);
+            m3 = _mm256_broadcast_ss (&tiPA[CT]);
+            m4 = _mm256_fmadd_ps (m1, clL[T], m4);
+            m5 = _mm256_fmadd_ps (m2, clR[T], m5);
+            m6 = _mm256_fmadd_ps (m3, clA[T], m6);
+            
+            m4 = _mm256_mul_ps (m4, m5);
+            *clP++ = _mm256_mul_ps (m4, m6);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[GA]);
+            m2 = _mm256_broadcast_ss (&tiPR[GA]);
+            m3 = _mm256_broadcast_ss (&tiPA[GA]);
+            m4 = _mm256_mul_ps (m1, clL[A]);
+            m5 = _mm256_mul_ps (m2, clR[A]);
+            m6 = _mm256_mul_ps (m3, clA[A]);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[GC]);
+            m2 = _mm256_broadcast_ss (&tiPR[GC]);
+            m3 = _mm256_broadcast_ss (&tiPA[GC]);
+            m4 = _mm256_fmadd_ps (m1, clL[C], m4);
+            m5 = _mm256_fmadd_ps (m2, clR[C], m5);
+            m6 = _mm256_fmadd_ps (m3, clA[C], m6);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[GG]);
+            m2 = _mm256_broadcast_ss (&tiPR[GG]);
+            m3 = _mm256_broadcast_ss (&tiPA[GG]);
+            m4 = _mm256_fmadd_ps (m1, clL[G], m4);
+            m5 = _mm256_fmadd_ps (m2, clR[G], m5);
+            m6 = _mm256_fmadd_ps (m3, clA[G], m6);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[GT]);
+            m2 = _mm256_broadcast_ss (&tiPR[GT]);
+            m3 = _mm256_broadcast_ss (&tiPA[GT]);
+            m4 = _mm256_fmadd_ps (m1, clL[T], m4);
+            m5 = _mm256_fmadd_ps (m2, clR[T], m5);
+            m6 = _mm256_fmadd_ps (m3, clA[T], m6);
+            
+            m4 = _mm256_mul_ps (m4, m5);
+            *clP++ = _mm256_mul_ps (m4, m6);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[TA]);
+            m2 = _mm256_broadcast_ss (&tiPR[TA]);
+            m3 = _mm256_broadcast_ss (&tiPA[TA]);
+            m4 = _mm256_mul_ps (m1, clL[A]);
+            m5 = _mm256_mul_ps (m2, clR[A]);
+            m6 = _mm256_mul_ps (m3, clA[A]);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[TC]);
+            m2 = _mm256_broadcast_ss (&tiPR[TC]);
+            m3 = _mm256_broadcast_ss (&tiPA[TC]);
+            m4 = _mm256_fmadd_ps (m1, clL[C], m4);
+            m5 = _mm256_fmadd_ps (m2, clR[C], m5);
+            m6 = _mm256_fmadd_ps (m3, clA[C], m6);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[TG]);
+            m2 = _mm256_broadcast_ss (&tiPR[TG]);
+            m3 = _mm256_broadcast_ss (&tiPA[TG]);
+            m4 = _mm256_fmadd_ps (m1, clL[G], m4);
+            m5 = _mm256_fmadd_ps (m2, clR[G], m5);
+            m6 = _mm256_fmadd_ps (m3, clA[G], m6);
+            
+            m1 = _mm256_broadcast_ss (&tiPL[TT]);
+            m2 = _mm256_broadcast_ss (&tiPR[TT]);
+            m3 = _mm256_broadcast_ss (&tiPA[TT]);
+            m4 = _mm256_fmadd_ps (m1, clL[T], m4);
+            m5 = _mm256_fmadd_ps (m2, clR[T], m5);
+            m6 = _mm256_fmadd_ps (m3, clA[T], m6);
+            
+            m4 = _mm256_mul_ps (m4, m5);
+            *clP++ = _mm256_mul_ps (m4, m6);
+
+            clL += 4;
+            clR += 4;
+            clA += 4;
+        }
+        tiPL += 16;
+        tiPR += 16;
+        tiPA += 16;
+    }
+    
+    return NO_ERROR;
+}
+#endif
 
 #if defined (SSE_ENABLED)
 //chl: changed CondLikeRoot_NUC4_SSE to CondLikeRoot_NUC4_AVX
@@ -6658,6 +6970,170 @@ int Likelihood_NUC4_GibbsGamma (TreeNode *p, int division, int chain, MrBFlt *ln
 //    return NO_ERROR;
 //}
 //#endif
+
+#if defined (FMA_ENABLED)
+/*------------------------------------------------------------------
+ |
+ |   Likelihood_NUC4_FMA: 4by4 nucleotide models with or without rate
+ |       variation using AVX + FMA code
+ |
+ -------------------------------------------------------------------*/
+int Likelihood_NUC4_FMA (TreeNode *p, int division, int chain, MrBFlt *lnL, int whichSitePats)
+{
+    int             c, k, hasPInvar;
+    MrBFlt          freq, *bs, pInvar=0.0, like, likeI;
+    CLFlt           *lnScaler, *nSitesOfPat, *lnL_SSE, *lnLI_SSE;
+    __m256          *clPtr, **clP, *clInvar=NULL;
+    __m256          mA, mC, mG, mT, mFreq, mPInvar=_mm256_set1_ps(0.0f), mLike;
+    ModelInfo       *m;
+
+    /* find model settings and pInvar, invar cond likes */
+    m = &modelSettings[division];
+    if (m->pInvar == NULL)
+    {
+        hasPInvar = NO;
+    }
+    else
+    {
+        hasPInvar = YES;
+        pInvar =  *(GetParamVals (m->pInvar, chain, state[chain]));
+        mPInvar = _mm256_set1_ps ((CLFlt)(pInvar));
+        clInvar = (__m256 *) (m->invCondLikes);
+    }
+    
+    /* find conditional likelihood pointers */
+    clPtr = (__m256 *) (m->condLikes[m->condLikeIndex[chain][p->index]]);
+    clP = m->clP_AVX;
+    for (k=0; k<m->numGammaCats; k++)
+    {
+        clP[k] = clPtr;
+        clPtr += m->numSSEChars * m->numModelStates;
+    }
+    lnL_SSE  = m->lnL_SSE;
+    lnLI_SSE = m->lnLI_SSE;
+    
+    /* find base frequencies */
+    bs = GetParamSubVals (m->stateFreq, chain, state[chain]);
+    mA = _mm256_set1_ps ((CLFlt)(bs[A]));
+    mC = _mm256_set1_ps ((CLFlt)(bs[C]));
+    mG = _mm256_set1_ps ((CLFlt)(bs[G]));
+    mT = _mm256_set1_ps ((CLFlt)(bs[T]));
+    
+    /* find category frequencies */
+    if (hasPInvar == NO)
+        freq =  1.0 / m->numGammaCats;
+    else
+        freq =  (1.0 - pInvar) / m->numGammaCats;
+    mFreq = _mm256_set1_ps ((CLFlt)(freq));
+    
+    /* find tree scaler */
+    lnScaler = m->scalers[m->siteScalerIndex[chain]];
+    
+    /* find nSitesOfPat */
+    nSitesOfPat = numSitesOfPat + (whichSitePats*numCompressedChars) + m->compCharStart;
+    
+    /* reset lnL */
+    *lnL = 0.0;
+    
+    /* calculate variable likelihood */
+    for (c=0; c<m->numSSEChars; c++)
+    {
+        mLike = _mm256_setzero_ps ();
+        for (k=0; k<m->numGammaCats; k++)
+        {
+            mLike = _mm256_fmadd_ps (clP[k][A], mA, mLike);
+            mLike = _mm256_fmadd_ps (clP[k][C], mC, mLike);
+            mLike = _mm256_fmadd_ps (clP[k][G], mG, mLike);
+            mLike = _mm256_fmadd_ps (clP[k][T], mT, mLike);
+            clP[k] += 4;
+        }
+        mLike = _mm256_mul_ps (mLike, mFreq);
+        _mm256_store_ps (lnL_SSE, mLike);
+        lnL_SSE += m->numFloatsPerVec;
+    }
+    
+    /* calculate invariable likelihood */
+    if (hasPInvar == YES)
+    {
+        for (c=0; c<m->numSSEChars; c++)
+        {
+            mLike = _mm256_mul_ps (clInvar[A], mA);
+            mLike = _mm256_fmadd_ps (clInvar[C], mC, mLike);
+            mLike = _mm256_fmadd_ps (clInvar[G], mG, mLike);
+            mLike = _mm256_fmadd_ps (clInvar[T], mT, mLike);
+            mLike = _mm256_mul_ps (mLike, mPInvar);
+            _mm256_store_ps (lnLI_SSE, mLike);
+            clInvar += 4;
+            lnLI_SSE += FLOATS_PER_VEC;
+        }
+    }
+    
+    /* accumulate results */
+    if (hasPInvar == NO)
+    {
+        for (c=0; c<m->numChars; c++)
+        {
+            like = m->lnL_SSE[c];
+            /* check against LIKE_EPSILON (values close to zero are problematic) */
+            if (like < LIKE_EPSILON)
+            {
+#   ifdef DEBUG_LIKELIHOOD
+                MrBayesPrint ("%s   WARNING: In LIKE_EPSILON - for division %d char %d has like = %1.30le\n", spacer, division+1, c+1, like);
+#   endif
+                (*lnL) = MRBFLT_NEG_MAX;
+                abortMove = YES;
+                return ERROR;
+            }
+            else
+            {
+                (*lnL) += (lnScaler[c] +  log(like)) * nSitesOfPat[c];
+            }
+        }
+    }
+    else
+    {
+        /* has invariable category */
+        for (c=0; c<m->numChars; c++)
+        {
+            like  = m->lnL_SSE[c];
+            likeI = m->lnLI_SSE[c];
+            if (lnScaler[c] < -200)
+            {
+                /* we are not going to be able to exponentiate the scaling factor */
+                if (likeI > 1E-70)
+                {
+                    /* forget about like; it is going to be insignificant compared to likeI */
+                    like = likeI;
+                }
+                else
+                {
+                    /* treat likeI as if 0.0, that is, ignore it completely */
+                }
+            }
+            else
+                like = like + (likeI / exp (lnScaler[c]));
+            
+            /* check against LIKE_EPSILON (values close to zero are problematic) */
+            if (like < LIKE_EPSILON)
+            {
+#   ifdef DEBUG_LIKELIHOOD
+                MrBayesPrint ("%s   WARNING: In LIKE_EPSILON - for division %d char %d has like = %1.30le\n", spacer, division+1, c+1, like);
+#   endif
+                (*lnL) = MRBFLT_NEG_MAX;
+                abortMove = YES;
+                return ERROR;
+            }
+            else
+            {
+                (*lnL) += (lnScaler[c] +  log(like)) * nSitesOfPat[c];
+            }
+        }
+    }
+    
+    return NO_ERROR;
+}
+#endif
+
 
 #if defined (SSE_ENABLED)
 /*------------------------------------------------------------------
