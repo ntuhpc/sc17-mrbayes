@@ -7049,7 +7049,9 @@ int Likelihood_NUC4_FMA (TreeNode *p, int division, int chain, MrBFlt *lnL, int 
         }
         mLike = _mm256_mul_ps (mLike, mFreq);
         _mm256_store_ps (lnL_SSE, mLike);
-        lnL_SSE += m->numFloatsPerVec;
+        //chl: imp diff
+        //lnL_SSE += m->numFloatsPerVec;
+        lnL_SSE += FLOATS_PER_VEC;
     }
     
     /* calculate invariable likelihood */
