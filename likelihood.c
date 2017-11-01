@@ -1245,89 +1245,89 @@ int CondLikeDown_NUC4_FMA (TreeNode *p, int division, int chain)
     {
         for (c=0; c<m->numSSEChars; c++)
         {
-            m1 = _mm512_broadcast_ss (&tiPL[AA]);
-            m2 = _mm512_broadcast_ss (&tiPR[AA]);
+            m1 = _mm512_broadcastss_ps (&tiPL[AA]);
+            m2 = _mm512_broadcastss_ps (&tiPR[AA]);
             m3 = _mm512_mul_ps (m1, clL[A]);
             m4 = _mm512_mul_ps (m2, clR[A]);
             
-            m1 = _mm512_broadcast_ss (&tiPL[AC]);
-            m2 = _mm512_broadcast_ss (&tiPR[AC]);
+            m1 = _mm512_broadcastss_ps (&tiPL[AC]);
+            m2 = _mm512_broadcastss_ps (&tiPR[AC]);
             m3 = _mm512_fmadd_ps (m1, clL[C], m3);
             m4 = _mm512_fmadd_ps (m2, clR[C], m4);
             
-            m1 = _mm512_broadcast_ss (&tiPL[AG]);
-            m2 = _mm512_broadcast_ss (&tiPR[AG]);
+            m1 = _mm512_broadcastss_ps (&tiPL[AG]);
+            m2 = _mm512_broadcastss_ps (&tiPR[AG]);
             m3 = _mm512_fmadd_ps (m1, clL[G], m3);
             m4 = _mm512_fmadd_ps (m2, clR[G], m4);
             
-            m1 = _mm512_broadcast_ss (&tiPL[AT]);
-            m2 = _mm512_broadcast_ss (&tiPR[AT]);
+            m1 = _mm512_broadcastss_ps (&tiPL[AT]);
+            m2 = _mm512_broadcastss_ps (&tiPR[AT]);
             m3 = _mm512_fmadd_ps (m1, clL[T], m3);
             m4 = _mm512_fmadd_ps (m2, clR[T], m4);
             
             *clP++ = _mm512_mul_ps (m3, m4);
 
-            m1 = _mm512_broadcast_ss (&tiPL[CA]);
-            m2 = _mm512_broadcast_ss (&tiPR[CA]);
+            m1 = _mm512_broadcastss_ps (&tiPL[CA]);
+            m2 = _mm512_broadcastss_ps (&tiPR[CA]);
             m3 = _mm512_mul_ps (m1, clL[A]);
             m4 = _mm512_mul_ps (m2, clR[A]);
             
-            m1 = _mm512_broadcast_ss (&tiPL[CC]);
-            m2 = _mm512_broadcast_ss (&tiPR[CC]);
+            m1 = _mm512_broadcastss_ps (&tiPL[CC]);
+            m2 = _mm512_broadcastss_ps (&tiPR[CC]);
             m3 = _mm512_fmadd_ps (m1, clL[C], m3);
             m4 = _mm512_fmadd_ps (m2, clR[C], m4);
             
-            m1 = _mm512_broadcast_ss (&tiPL[CG]);
-            m2 = _mm512_broadcast_ss (&tiPR[CG]);
+            m1 = _mm512_broadcastss_ps (&tiPL[CG]);
+            m2 = _mm512_broadcastss_ps (&tiPR[CG]);
             m3 = _mm512_fmadd_ps (m1, clL[G], m3);
             m4 = _mm512_fmadd_ps (m2, clR[G], m4);
             
-            m1 = _mm512_broadcast_ss (&tiPL[CT]);
-            m2 = _mm512_broadcast_ss (&tiPR[CT]);
+            m1 = _mm512_broadcastss_ps (&tiPL[CT]);
+            m2 = _mm512_broadcastss_ps (&tiPR[CT]);
             m3 = _mm512_fmadd_ps (m1, clL[T], m3);
             m4 = _mm512_fmadd_ps (m2, clR[T], m4);
             
             *clP++ = _mm512_mul_ps (m3, m4);
             
-            m1 = _mm512_broadcast_ss (&tiPL[GA]);
-            m2 = _mm512_broadcast_ss (&tiPR[GA]);
+            m1 = _mm512_broadcastss_ps (&tiPL[GA]);
+            m2 = _mm512_broadcastss_ps (&tiPR[GA]);
             m3 = _mm512_mul_ps (m1, clL[A]);
             m4 = _mm512_mul_ps (m2, clR[A]);
             
-            m1 = _mm512_broadcast_ss (&tiPL[GC]);
-            m2 = _mm512_broadcast_ss (&tiPR[GC]);
+            m1 = _mm512_broadcastss_ps (&tiPL[GC]);
+            m2 = _mm512_broadcastss_ps (&tiPR[GC]);
             m3 = _mm512_fmadd_ps (m1, clL[C], m3);
             m4 = _mm512_fmadd_ps (m2, clR[C], m4);
             
-            m1 = _mm512_broadcast_ss (&tiPL[GG]);
-            m2 = _mm512_broadcast_ss (&tiPR[GG]);
+            m1 = _mm512_broadcastss_ps (&tiPL[GG]);
+            m2 = _mm512_broadcastss_ps (&tiPR[GG]);
             m3 = _mm512_fmadd_ps (m1, clL[G], m3);
             m4 = _mm512_fmadd_ps (m2, clR[G], m4);
             
-            m1 = _mm512_broadcast_ss (&tiPL[GT]);
-            m2 = _mm512_broadcast_ss (&tiPR[GT]);
+            m1 = _mm512_broadcastss_ps (&tiPL[GT]);
+            m2 = _mm512_broadcastss_ps (&tiPR[GT]);
             m3 = _mm512_fmadd_ps (m1, clL[T], m3);
             m4 = _mm512_fmadd_ps (m2, clR[T], m4);
             
             *clP++ = _mm512_mul_ps (m3, m4);
             
-            m1 = _mm512_broadcast_ss (&tiPL[TA]);
-            m2 = _mm512_broadcast_ss (&tiPR[TA]);
+            m1 = _mm512_broadcastss_ps (&tiPL[TA]);
+            m2 = _mm512_broadcastss_ps (&tiPR[TA]);
             m3 = _mm512_mul_ps (m1, clL[A]);
             m4 = _mm512_mul_ps (m2, clR[A]);
             
-            m1 = _mm512_broadcast_ss (&tiPL[TC]);
-            m2 = _mm512_broadcast_ss (&tiPR[TC]);
+            m1 = _mm512_broadcastss_ps (&tiPL[TC]);
+            m2 = _mm512_broadcastss_ps (&tiPR[TC]);
             m3 = _mm512_fmadd_ps (m1, clL[C], m3);
             m4 = _mm512_fmadd_ps (m2, clR[C], m4);
             
-            m1 = _mm512_broadcast_ss (&tiPL[TG]);
-            m2 = _mm512_broadcast_ss (&tiPR[TG]);
+            m1 = _mm512_broadcastss_ps (&tiPL[TG]);
+            m2 = _mm512_broadcastss_ps (&tiPR[TG]);
             m3 = _mm512_fmadd_ps (m1, clL[G], m3);
             m4 = _mm512_fmadd_ps (m2, clR[G], m4);
             
-            m1 = _mm512_broadcast_ss (&tiPL[TT]);
-            m2 = _mm512_broadcast_ss (&tiPR[TT]);
+            m1 = _mm512_broadcastss_ps (&tiPL[TT]);
+            m2 = _mm512_broadcastss_ps (&tiPR[TT]);
             m3 = _mm512_fmadd_ps (m1, clL[T], m3);
             m4 = _mm512_fmadd_ps (m2, clR[T], m4);
             
@@ -1381,27 +1381,27 @@ int CondLikeDown_NUC4_SSE (TreeNode *p, int division, int chain)
     {
         for (c=0; c<m->numSSEChars; c++)
         {
-            m1 = _mm512_broadcast_ss (&tiPL[AA]);
-            m2 = _mm512_broadcast_ss (&tiPR[AA]);
+            m1 = _mm512_broadcastss_ps (&tiPL[AA]);
+            m2 = _mm512_broadcastss_ps (&tiPR[AA]);
             m5 = _mm512_mul_ps (m1, clL[A]);
             m6 = _mm512_mul_ps (m2, clR[A]);
             
-            m1 = _mm512_broadcast_ss (&tiPL[AC]);
-            m2 = _mm512_broadcast_ss (&tiPR[AC]);
+            m1 = _mm512_broadcastss_ps (&tiPL[AC]);
+            m2 = _mm512_broadcastss_ps (&tiPR[AC]);
             m3 = _mm512_mul_ps (m1, clL[C]);
             m4 = _mm512_mul_ps (m2, clR[C]);
             m5 = _mm512_add_ps (m3, m5);
             m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[AG]);
-            m2 = _mm512_broadcast_ss (&tiPR[AG]);
+            m1 = _mm512_broadcastss_ps (&tiPL[AG]);
+            m2 = _mm512_broadcastss_ps (&tiPR[AG]);
             m3 = _mm512_mul_ps (m1, clL[G]);
             m4 = _mm512_mul_ps (m2, clR[G]);
             m5 = _mm512_add_ps (m3, m5);
             m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[AT]);
-            m2 = _mm512_broadcast_ss (&tiPR[AT]);
+            m1 = _mm512_broadcastss_ps (&tiPL[AT]);
+            m2 = _mm512_broadcastss_ps (&tiPR[AT]);
             m3 = _mm512_mul_ps (m1, clL[T]);
             m4 = _mm512_mul_ps (m2, clR[T]);
             m5 = _mm512_add_ps (m3, m5);
@@ -1409,27 +1409,27 @@ int CondLikeDown_NUC4_SSE (TreeNode *p, int division, int chain)
             
             *clP++ = _mm512_mul_ps (m5, m6);
 
-            m1 = _mm512_broadcast_ss (&tiPL[CA]);
-            m2 = _mm512_broadcast_ss (&tiPR[CA]);
+            m1 = _mm512_broadcastss_ps (&tiPL[CA]);
+            m2 = _mm512_broadcastss_ps (&tiPR[CA]);
             m5 = _mm512_mul_ps (m1, clL[A]);
             m6 = _mm512_mul_ps (m2, clR[A]);
             
-            m1 = _mm512_broadcast_ss (&tiPL[CC]);
-            m2 = _mm512_broadcast_ss (&tiPR[CC]);
+            m1 = _mm512_broadcastss_ps (&tiPL[CC]);
+            m2 = _mm512_broadcastss_ps (&tiPR[CC]);
             m3 = _mm512_mul_ps (m1, clL[C]);
             m4 = _mm512_mul_ps (m2, clR[C]);
             m5 = _mm512_add_ps (m3, m5);
             m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[CG]);
-            m2 = _mm512_broadcast_ss (&tiPR[CG]);
+            m1 = _mm512_broadcastss_ps (&tiPL[CG]);
+            m2 = _mm512_broadcastss_ps (&tiPR[CG]);
             m3 = _mm512_mul_ps (m1, clL[G]);
             m4 = _mm512_mul_ps (m2, clR[G]);
             m5 = _mm512_add_ps (m3, m5);
             m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[CT]);
-            m2 = _mm512_broadcast_ss (&tiPR[CT]);
+            m1 = _mm512_broadcastss_ps (&tiPL[CT]);
+            m2 = _mm512_broadcastss_ps (&tiPR[CT]);
             m3 = _mm512_mul_ps (m1, clL[T]);
             m4 = _mm512_mul_ps (m2, clR[T]);
             m5 = _mm512_add_ps (m3, m5);
@@ -1437,27 +1437,27 @@ int CondLikeDown_NUC4_SSE (TreeNode *p, int division, int chain)
             
             *clP++ = _mm512_mul_ps (m5, m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[GA]);
-            m2 = _mm512_broadcast_ss (&tiPR[GA]);
+            m1 = _mm512_broadcastss_ps (&tiPL[GA]);
+            m2 = _mm512_broadcastss_ps (&tiPR[GA]);
             m5 = _mm512_mul_ps (m1, clL[A]);
             m6 = _mm512_mul_ps (m2, clR[A]);
             
-            m1 = _mm512_broadcast_ss (&tiPL[GC]);
-            m2 = _mm512_broadcast_ss (&tiPR[GC]);
+            m1 = _mm512_broadcastss_ps (&tiPL[GC]);
+            m2 = _mm512_broadcastss_ps (&tiPR[GC]);
             m3 = _mm512_mul_ps (m1, clL[C]);
             m4 = _mm512_mul_ps (m2, clR[C]);
             m5 = _mm512_add_ps (m3, m5);
             m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[GG]);
-            m2 = _mm512_broadcast_ss (&tiPR[GG]);
+            m1 = _mm512_broadcastss_ps (&tiPL[GG]);
+            m2 = _mm512_broadcastss_ps (&tiPR[GG]);
             m3 = _mm512_mul_ps (m1, clL[G]);
             m4 = _mm512_mul_ps (m2, clR[G]);
             m5 = _mm512_add_ps (m3, m5);
             m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[GT]);
-            m2 = _mm512_broadcast_ss (&tiPR[GT]);
+            m1 = _mm512_broadcastss_ps (&tiPL[GT]);
+            m2 = _mm512_broadcastss_ps (&tiPR[GT]);
             m3 = _mm512_mul_ps (m1, clL[T]);
             m4 = _mm512_mul_ps (m2, clR[T]);
             m5 = _mm512_add_ps (m3, m5);
@@ -1465,27 +1465,27 @@ int CondLikeDown_NUC4_SSE (TreeNode *p, int division, int chain)
             
             *clP++ = _mm512_mul_ps (m5, m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[TA]);
-            m2 = _mm512_broadcast_ss (&tiPR[TA]);
+            m1 = _mm512_broadcastss_ps (&tiPL[TA]);
+            m2 = _mm512_broadcastss_ps (&tiPR[TA]);
             m5 = _mm512_mul_ps (m1, clL[A]);
             m6 = _mm512_mul_ps (m2, clR[A]);
             
-            m1 = _mm512_broadcast_ss (&tiPL[TC]);
-            m2 = _mm512_broadcast_ss (&tiPR[TC]);
+            m1 = _mm512_broadcastss_ps (&tiPL[TC]);
+            m2 = _mm512_broadcastss_ps (&tiPR[TC]);
             m3 = _mm512_mul_ps (m1, clL[C]);
             m4 = _mm512_mul_ps (m2, clR[C]);
             m5 = _mm512_add_ps (m3, m5);
             m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[TG]);
-            m2 = _mm512_broadcast_ss (&tiPR[TG]);
+            m1 = _mm512_broadcastss_ps (&tiPL[TG]);
+            m2 = _mm512_broadcastss_ps (&tiPR[TG]);
             m3 = _mm512_mul_ps (m1, clL[G]);
             m4 = _mm512_mul_ps (m2, clR[G]);
             m5 = _mm512_add_ps (m3, m5);
             m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[TT]);
-            m2 = _mm512_broadcast_ss (&tiPR[TT]);
+            m1 = _mm512_broadcastss_ps (&tiPL[TT]);
+            m2 = _mm512_broadcastss_ps (&tiPR[TT]);
             m3 = _mm512_mul_ps (m1, clL[T]);
             m4 = _mm512_mul_ps (m2, clR[T]);
             m5 = _mm512_add_ps (m3, m5);
@@ -3672,30 +3672,30 @@ int CondLikeRoot_NUC4_FMA (TreeNode *p, int division, int chain)
     {
         for (c=0; c<m->numSSEChars; c++)
         {
-            m1 = _mm512_broadcast_ss (&tiPL[AA]);
-            m2 = _mm512_broadcast_ss (&tiPR[AA]);
-            m3 = _mm512_broadcast_ss (&tiPA[AA]);
+            m1 = _mm512_broadcastss_ps (&tiPL[AA]);
+            m2 = _mm512_broadcastss_ps (&tiPR[AA]);
+            m3 = _mm512_broadcastss_ps (&tiPA[AA]);
             m4 = _mm512_mul_ps (m1, clL[A]);
             m5 = _mm512_mul_ps (m2, clR[A]);
             m6 = _mm512_mul_ps (m3, clA[A]);
             
-            m1 = _mm512_broadcast_ss (&tiPL[AC]);
-            m2 = _mm512_broadcast_ss (&tiPR[AC]);
-            m3 = _mm512_broadcast_ss (&tiPA[AC]);
+            m1 = _mm512_broadcastss_ps (&tiPL[AC]);
+            m2 = _mm512_broadcastss_ps (&tiPR[AC]);
+            m3 = _mm512_broadcastss_ps (&tiPA[AC]);
             m4 = _mm512_fmadd_ps (m1, clL[C], m4);
             m5 = _mm512_fmadd_ps (m2, clR[C], m5);
             m6 = _mm512_fmadd_ps (m3, clA[C], m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[AG]);
-            m2 = _mm512_broadcast_ss (&tiPR[AG]);
-            m3 = _mm512_broadcast_ss (&tiPA[AG]);
+            m1 = _mm512_broadcastss_ps (&tiPL[AG]);
+            m2 = _mm512_broadcastss_ps (&tiPR[AG]);
+            m3 = _mm512_broadcastss_ps (&tiPA[AG]);
             m4 = _mm512_fmadd_ps (m1, clL[G], m4);
             m5 = _mm512_fmadd_ps (m2, clR[G], m5);
             m6 = _mm512_fmadd_ps (m3, clA[G], m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[AT]);
-            m2 = _mm512_broadcast_ss (&tiPR[AT]);
-            m3 = _mm512_broadcast_ss (&tiPA[AT]);
+            m1 = _mm512_broadcastss_ps (&tiPL[AT]);
+            m2 = _mm512_broadcastss_ps (&tiPR[AT]);
+            m3 = _mm512_broadcastss_ps (&tiPA[AT]);
             m4 = _mm512_fmadd_ps (m1, clL[T], m4);
             m5 = _mm512_fmadd_ps (m2, clR[T], m5);
             m6 = _mm512_fmadd_ps (m3, clA[T], m6);
@@ -3703,30 +3703,30 @@ int CondLikeRoot_NUC4_FMA (TreeNode *p, int division, int chain)
             m4 = _mm512_mul_ps (m4, m5);
             *clP++ = _mm512_mul_ps (m4, m6);
            
-            m1 = _mm512_broadcast_ss (&tiPL[CA]);
-            m2 = _mm512_broadcast_ss (&tiPR[CA]);
-            m3 = _mm512_broadcast_ss (&tiPA[CA]);
+            m1 = _mm512_broadcastss_ps (&tiPL[CA]);
+            m2 = _mm512_broadcastss_ps (&tiPR[CA]);
+            m3 = _mm512_broadcastss_ps (&tiPA[CA]);
             m4 = _mm512_mul_ps (m1, clL[A]);
             m5 = _mm512_mul_ps (m2, clR[A]);
             m6 = _mm512_mul_ps (m3, clA[A]);
             
-            m1 = _mm512_broadcast_ss (&tiPL[CC]);
-            m2 = _mm512_broadcast_ss (&tiPR[CC]);
-            m3 = _mm512_broadcast_ss (&tiPA[CC]);
+            m1 = _mm512_broadcastss_ps (&tiPL[CC]);
+            m2 = _mm512_broadcastss_ps (&tiPR[CC]);
+            m3 = _mm512_broadcastss_ps (&tiPA[CC]);
             m4 = _mm512_fmadd_ps (m1, clL[C], m4);
             m5 = _mm512_fmadd_ps (m2, clR[C], m5);
             m6 = _mm512_fmadd_ps (m3, clA[C], m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[CG]);
-            m2 = _mm512_broadcast_ss (&tiPR[CG]);
-            m3 = _mm512_broadcast_ss (&tiPA[CG]);
+            m1 = _mm512_broadcastss_ps (&tiPL[CG]);
+            m2 = _mm512_broadcastss_ps (&tiPR[CG]);
+            m3 = _mm512_broadcastss_ps (&tiPA[CG]);
             m4 = _mm512_fmadd_ps (m1, clL[G], m4);
             m5 = _mm512_fmadd_ps (m2, clR[G], m5);
             m6 = _mm512_fmadd_ps (m3, clA[G], m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[CT]);
-            m2 = _mm512_broadcast_ss (&tiPR[CT]);
-            m3 = _mm512_broadcast_ss (&tiPA[CT]);
+            m1 = _mm512_broadcastss_ps (&tiPL[CT]);
+            m2 = _mm512_broadcastss_ps (&tiPR[CT]);
+            m3 = _mm512_broadcastss_ps (&tiPA[CT]);
             m4 = _mm512_fmadd_ps (m1, clL[T], m4);
             m5 = _mm512_fmadd_ps (m2, clR[T], m5);
             m6 = _mm512_fmadd_ps (m3, clA[T], m6);
@@ -3734,30 +3734,30 @@ int CondLikeRoot_NUC4_FMA (TreeNode *p, int division, int chain)
             m4 = _mm512_mul_ps (m4, m5);
             *clP++ = _mm512_mul_ps (m4, m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[GA]);
-            m2 = _mm512_broadcast_ss (&tiPR[GA]);
-            m3 = _mm512_broadcast_ss (&tiPA[GA]);
+            m1 = _mm512_broadcastss_ps (&tiPL[GA]);
+            m2 = _mm512_broadcastss_ps (&tiPR[GA]);
+            m3 = _mm512_broadcastss_ps (&tiPA[GA]);
             m4 = _mm512_mul_ps (m1, clL[A]);
             m5 = _mm512_mul_ps (m2, clR[A]);
             m6 = _mm512_mul_ps (m3, clA[A]);
             
-            m1 = _mm512_broadcast_ss (&tiPL[GC]);
-            m2 = _mm512_broadcast_ss (&tiPR[GC]);
-            m3 = _mm512_broadcast_ss (&tiPA[GC]);
+            m1 = _mm512_broadcastss_ps (&tiPL[GC]);
+            m2 = _mm512_broadcastss_ps (&tiPR[GC]);
+            m3 = _mm512_broadcastss_ps (&tiPA[GC]);
             m4 = _mm512_fmadd_ps (m1, clL[C], m4);
             m5 = _mm512_fmadd_ps (m2, clR[C], m5);
             m6 = _mm512_fmadd_ps (m3, clA[C], m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[GG]);
-            m2 = _mm512_broadcast_ss (&tiPR[GG]);
-            m3 = _mm512_broadcast_ss (&tiPA[GG]);
+            m1 = _mm512_broadcastss_ps (&tiPL[GG]);
+            m2 = _mm512_broadcastss_ps (&tiPR[GG]);
+            m3 = _mm512_broadcastss_ps (&tiPA[GG]);
             m4 = _mm512_fmadd_ps (m1, clL[G], m4);
             m5 = _mm512_fmadd_ps (m2, clR[G], m5);
             m6 = _mm512_fmadd_ps (m3, clA[G], m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[GT]);
-            m2 = _mm512_broadcast_ss (&tiPR[GT]);
-            m3 = _mm512_broadcast_ss (&tiPA[GT]);
+            m1 = _mm512_broadcastss_ps (&tiPL[GT]);
+            m2 = _mm512_broadcastss_ps (&tiPR[GT]);
+            m3 = _mm512_broadcastss_ps (&tiPA[GT]);
             m4 = _mm512_fmadd_ps (m1, clL[T], m4);
             m5 = _mm512_fmadd_ps (m2, clR[T], m5);
             m6 = _mm512_fmadd_ps (m3, clA[T], m6);
@@ -3765,30 +3765,30 @@ int CondLikeRoot_NUC4_FMA (TreeNode *p, int division, int chain)
             m4 = _mm512_mul_ps (m4, m5);
             *clP++ = _mm512_mul_ps (m4, m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[TA]);
-            m2 = _mm512_broadcast_ss (&tiPR[TA]);
-            m3 = _mm512_broadcast_ss (&tiPA[TA]);
+            m1 = _mm512_broadcastss_ps (&tiPL[TA]);
+            m2 = _mm512_broadcastss_ps (&tiPR[TA]);
+            m3 = _mm512_broadcastss_ps (&tiPA[TA]);
             m4 = _mm512_mul_ps (m1, clL[A]);
             m5 = _mm512_mul_ps (m2, clR[A]);
             m6 = _mm512_mul_ps (m3, clA[A]);
             
-            m1 = _mm512_broadcast_ss (&tiPL[TC]);
-            m2 = _mm512_broadcast_ss (&tiPR[TC]);
-            m3 = _mm512_broadcast_ss (&tiPA[TC]);
+            m1 = _mm512_broadcastss_ps (&tiPL[TC]);
+            m2 = _mm512_broadcastss_ps (&tiPR[TC]);
+            m3 = _mm512_broadcastss_ps (&tiPA[TC]);
             m4 = _mm512_fmadd_ps (m1, clL[C], m4);
             m5 = _mm512_fmadd_ps (m2, clR[C], m5);
             m6 = _mm512_fmadd_ps (m3, clA[C], m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[TG]);
-            m2 = _mm512_broadcast_ss (&tiPR[TG]);
-            m3 = _mm512_broadcast_ss (&tiPA[TG]);
+            m1 = _mm512_broadcastss_ps (&tiPL[TG]);
+            m2 = _mm512_broadcastss_ps (&tiPR[TG]);
+            m3 = _mm512_broadcastss_ps (&tiPA[TG]);
             m4 = _mm512_fmadd_ps (m1, clL[G], m4);
             m5 = _mm512_fmadd_ps (m2, clR[G], m5);
             m6 = _mm512_fmadd_ps (m3, clA[G], m6);
             
-            m1 = _mm512_broadcast_ss (&tiPL[TT]);
-            m2 = _mm512_broadcast_ss (&tiPR[TT]);
-            m3 = _mm512_broadcast_ss (&tiPA[TT]);
+            m1 = _mm512_broadcastss_ps (&tiPL[TT]);
+            m2 = _mm512_broadcastss_ps (&tiPR[TT]);
+            m3 = _mm512_broadcastss_ps (&tiPA[TT]);
             m4 = _mm512_fmadd_ps (m1, clL[T], m4);
             m5 = _mm512_fmadd_ps (m2, clR[T], m5);
             m6 = _mm512_fmadd_ps (m3, clA[T], m6);
