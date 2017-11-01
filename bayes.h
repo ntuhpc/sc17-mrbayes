@@ -132,7 +132,8 @@ typedef float CLFlt;        /* single-precision float used for cond likes (CLFlt
 /* Define a compiler and vector size for the SSE code */
 #if defined (SSE_ENABLED)
 //chl: have changed FLOATS_PER_VEC from 4 to 8
-#  define FLOATS_PER_VEC 8
+// Ziji : changed to 16 for AVX512
+#  define FLOATS_PER_VEC 16
 #  if defined (WIN_VERSION)
 #    define MS_VCPP_SSE
 #    include <xmmintrin.h>
