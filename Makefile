@@ -1,10 +1,10 @@
 SRCDIR       = .
 RM           = rm
 CC           = mpiicc
-CFLAGS       = -O3 -ggdb -Wall -I/home/public/mrbayes/install/include/libhmsbeagle-1 -DUSECONFIG_H
+CFLAGS       = -O3 -DNDEBUG -I/home/public/mrbayes/install/include/libhmsbeagle-1 -DUSECONFIG_H
 LDFLAGS      =  -L/home/public/mrbayes/install/lib -lhmsbeagle -lreadline -lm
 INSTALL      = /usr/bin/install -c
-prefix      ?= /home/public/mrbayes/install/bin/mb_fma
+prefix      ?= /home/ziji/install
 exec_prefix ?= ${prefix}
 BINDIR      ?= ${exec_prefix}/bin
 

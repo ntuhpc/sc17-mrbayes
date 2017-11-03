@@ -55,7 +55,7 @@
 
 /* Set FMA_ENABLED if FMA SIMD extensions available. */
 #if defined(HAVE_FMA3) || defined(HAVE_FMA4)
-#define FMA_ENABLED
+#define FMA_ENABLED 1
 #endif
 
 /* uncomment the following line when releasing, also modify the VERSION_NUMBER below */
@@ -1301,14 +1301,14 @@ typedef struct modelinfo
     CLFlt       **clP;                      /* handy pointers to cond likes for ti cats     */
 #if defined (SSE_ENABLED)
     __m128      **clP_SSE;                  /* handy pointers to cond likes, SSE version    */
-    __m256      **clP_AVX;                  /* handy pointers to cond likes, AVX version    */  
+    __m512      **clP_AVX;                  /* handy pointers to cond likes, AVX version    */  
     int         numSSEChars;                /* number of compact SSE character groups       */
     int         numFloatsPerVec;            /* number of floats per SIMD vector             */
     CLFlt       *lnL_SSE;                   /* temp storage for log site likes              */
     CLFlt       *lnLI_SSE;                  /* temp storage for log site invariable likes   */
-//#if defined (AVX_ENABLED)
-    //__m256      **clP_AVX;                  /* handy pointers to cond likes, AVX version    */
-//#endif
+// #if defined (AVX_ENABLED)
+//     __m256      **clP_AVX;                  /* handy pointers to cond likes, AVX version    */
+// #endif
 #endif
     MrBFlt      **cijks;                    /* space for cijks                              */
     int         **condLikeIndex;            /* index to cond like space for nodes & chains  */
