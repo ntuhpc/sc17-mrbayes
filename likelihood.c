@@ -5668,7 +5668,7 @@ int CondLikeScaler_NUC4_SSE (TreeNode *p, int division, int chain)
     /* rescale */
     for (c=0; c<m->numSSEChars; c++)
     {
-        m1 = _mm256_setzero_ps ();
+        m1 = _mm512_setzero_ps ();
 
         for (k=0; k<m->numGammaCats; k++)
         {
@@ -7299,8 +7299,8 @@ int Likelihood_NUC4_SSE (TreeNode *p, int division, int chain, MrBFlt *lnL, int 
     int             c, k, hasPInvar;
     MrBFlt          freq, *bs, pInvar=0.0, like, likeI;
     CLFlt           *lnScaler, *nSitesOfPat, *lnL_SSE, *lnLI_SSE;
-    __m256          *clPtr, **clP, *clInvar=NULL;
-    __m256          m1, mA, mC, mG, mT, mFreq, mPInvar=_mm256_set1_ps(0.0f), mLike;
+    __m512          *clPtr, **clP, *clInvar=NULL;
+    __m512          m1, mA, mC, mG, mT, mFreq, mPInvar=_mm512_set1_ps(0.0f), mLike;
     ModelInfo       *m;
     
     /* find model settings and pInvar, invar cond likes */
@@ -7313,12 +7313,12 @@ int Likelihood_NUC4_SSE (TreeNode *p, int division, int chain, MrBFlt *lnL, int 
     {
         hasPInvar = YES;
         pInvar =  *(GetParamVals (m->pInvar, chain, state[chain]));
-        mPInvar = _mm256_set1_ps ((CLFlt)(pInvar));
-        clInvar = (__m256 *) (m->invCondLikes);
+        mPInvar = _mm512_set1_ps ((CLFlt)(pInvar));
+        clInvar = (__m512 *) (m->invCondLikes);
     }
     
     /* find conditional likelihood pointers */
-    clPtr = (__m256 *) (m->condLikes[m->condLikeIndex[chain][p->index]]);
+    clPtr = (__m512 *) (m->condLikes[m->condLikeIndex[chain][p->index]]);
     clP = m->clP_AVX;
     for (k=0; k<m->numGammaCats; k++)
     {
@@ -7330,17 +7330,17 @@ int Likelihood_NUC4_SSE (TreeNode *p, int division, int chain, MrBFlt *lnL, int 
     
     /* find base frequencies */
     bs = GetParamSubVals (m->stateFreq, chain, state[chain]);
-    mA = _mm256_set1_ps ((CLFlt)(bs[A]));
-    mC = _mm256_set1_ps ((CLFlt)(bs[C]));
-    mG = _mm256_set1_ps ((CLFlt)(bs[G]));
-    mT = _mm256_set1_ps ((CLFlt)(bs[T]));
+    mA = _mm512_set1_ps ((CLFlt)(bs[A]));
+    mC = _mm512_set1_ps ((CLFlt)(bs[C]));
+    mG = _mm512_set1_ps ((CLFlt)(bs[G]));
+    mT = _mm512_set1_ps ((CLFlt)(bs[T]));
     
     /* find category frequencies */
     if (hasPInvar == NO)
         freq =  1.0 / m->numGammaCats;
     else
         freq =  (1.0 - pInvar) / m->numGammaCats;
-    mFreq = _mm256_set1_ps ((CLFlt)(freq));
+    mFreq = _mm512_set1_ps ((CLFlt)(freq));
     
     /* find tree scaler */
     lnScaler = m->scalers[m->siteScalerIndex[chain]];
@@ -7354,21 +7354,26 @@ int Likelihood_NUC4_SSE (TreeNode *p, int division, int chain, MrBFlt *lnL, int 
     /* calculate variable likelihood */
     for (c=0; c<m->numSSEChars; c++)
     {
-        mLike = _mm256_setzero_ps ();
+        mLike = _mm512_setzero_ps ();
         for (k=0; k<m->numGammaCats; k++)
         {
-            m1    = _mm256_mul_ps (clP[k][A], mA);
-            mLike = _mm256_add_ps (mLike, m1);
-            m1    = _mm256_mul_ps (clP[k][C], mC);
-            mLike = _mm256_add_ps (mLike, m1);
-            m1    = _mm256_mul_ps (clP[k][G], mG);
-            mLike = _mm256_add_ps (mLike, m1);
-            m1    = _mm256_mul_ps (clP[k][T], mT);
-            mLike = _mm256_add_ps (mLike, m1);
+            // m1    = _mm256_mul_ps (clP[k][A], mA);
+            // mLike = _mm256_add_ps (mLike, m1);
+            // m1    = _mm256_mul_ps (clP[k][C], mC);
+            // mLike = _mm256_add_ps (mLike, m1);
+            // m1    = _mm256_mul_ps (clP[k][G], mG);
+            // mLike = _mm256_add_ps (mLike, m1);
+            // m1    = _mm256_mul_ps (clP[k][T], mT);
+            // mLike = _mm256_add_ps (mLike, m1);
+            // Ziji : rewriting with FMA
+            mLike = _mm512_fmadd_ps (clP[k][A], mA,mLike);
+            mLike = _mm512_fmadd_ps (clP[k][C], mC,mLike);
+            mLike = _mm512_fmadd_ps (clP[k][G], mG,mLike);
+            mLike = _mm512_fmadd_ps (clP[k][T], mT,mLike);
             clP[k] += 4;
         }
-        mLike = _mm256_mul_ps (mLike, mFreq);
-        _mm256_store_ps (lnL_SSE, mLike);
+        mLike = _mm512_mul_ps (mLike, mFreq);
+        _mm512_store_ps (lnL_SSE, mLike);
         //chl: imp diff
         //lnL_SSE += m->numFloatsPerVec;
         lnL_SSE += FLOATS_PER_VEC;
@@ -7379,16 +7384,23 @@ int Likelihood_NUC4_SSE (TreeNode *p, int division, int chain, MrBFlt *lnL, int 
     {
         for (c=0; c<m->numSSEChars; c++)
         {
-            mLike = _mm256_mul_ps (clInvar[A], mA);
-            m1    = _mm256_mul_ps (clInvar[C], mC);
-            mLike = _mm256_add_ps (mLike, m1);
-            m1    = _mm256_mul_ps (clInvar[G], mG);
-            mLike = _mm256_add_ps (mLike, m1);
-            m1    = _mm256_mul_ps (clInvar[T], mT);
-            mLike = _mm256_add_ps (mLike, m1);
-            mLike = _mm256_mul_ps (mLike, mPInvar);
+            // mLike = _mm512_mul_ps (clInvar[A], mA);
+            // m1    = _mm512_mul_ps (clInvar[C], mC);
+            // mLike = _mm512_add_ps (mLike, m1);
+            // m1    = _mm512_mul_ps (clInvar[G], mG);
+            // mLike = _mm256_add_ps (mLike, m1);
+            // m1    = _mm512_mul_ps (clInvar[T], mT);
+            // mLike = _mm256_add_ps (mLike, m1);
+            // mLike = _mm512_mul_ps (mLike, mPInvar);
+
+            mLike = _mm512_mul_ps (clInvar[A], mA);
+            mLike = _mm512_fmadd_ps (clInvar[C], mC, mLike);
+            mLike = _mm512_fmadd_ps (clInvar[G], mG, mLike);
+            mLike = _mm512_fmadd_ps (clInvar[T], mT, mLike);
+            mLike = _mm512_mul_ps (mLike, mPInvar);
+
             
-            _mm256_store_ps (lnLI_SSE, mLike);
+            _mm512_store_ps (lnLI_SSE, mLike);
             clInvar += 4;
             //chl: imp diff
             //lnLI_SSE += m->numFloatsPerVec;
