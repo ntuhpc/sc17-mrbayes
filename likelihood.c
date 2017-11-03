@@ -1220,7 +1220,7 @@ int CondLikeDown_NUC4_GibbsGamma (TreeNode *p, int division, int chain)
 int CondLikeDown_NUC4_FMA (TreeNode *p, int division, int chain)
 {
     int             c, k;
-    __m128           *pL, *pR, *tiPL, *tiPR;
+    CLFlt           *pL, *pR, *tiPL, *tiPR;
     __m512          *clL, *clR, *clP;
     __m512          m1, m2, m3, m4;
     ModelInfo       *m;
@@ -1247,7 +1247,7 @@ int CondLikeDown_NUC4_FMA (TreeNode *p, int division, int chain)
         {
             m1 = _mm512_broadcastss_ps (&tiPL[AA]);
             m2 = _mm512_broadcastss_ps (&tiPR[AA]);
-            m3 = _mm512_mul_ps (m1, clL[A]);
+            m3 = _mm512_mul_ps (_mm512_set1_ps(tiPL[AA]), clL[A]);
             m4 = _mm512_mul_ps (m2, clR[A]);
             
             m1 = _mm512_broadcastss_ps (&tiPL[AC]);
@@ -1356,7 +1356,7 @@ int CondLikeDown_NUC4_FMA (TreeNode *p, int division, int chain)
 int CondLikeDown_NUC4_SSE (TreeNode *p, int division, int chain)
 {
     int             c, k;
-    __m128           *pL, *pR, *tiPL, *tiPR;
+    CLFlt           *pL, *pR, *tiPL, *tiPR;
     __m512          *clL, *clR, *clP;
     __m512          m1, m2, m3, m4, m5, m6;
     ModelInfo       *m;
@@ -3644,7 +3644,7 @@ int CondLikeRoot_NUC4_GibbsGamma (TreeNode *p, int division, int chain)
 int CondLikeRoot_NUC4_FMA (TreeNode *p, int division, int chain)
 {
     int             c, k;
-    __m128           *pL, *pR, *pA, *tiPL, *tiPR, *tiPA;
+    CLFlt           *pL, *pR, *pA, *tiPL, *tiPR, *tiPA;
     __m512          *clL, *clR, *clP, *clA;
     __m512          m1, m2, m3, m4, m5, m6;
     ModelInfo       *m;
