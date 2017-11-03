@@ -1245,10 +1245,10 @@ int CondLikeDown_NUC4_FMA (TreeNode *p, int division, int chain)
     {
         for (c=0; c<m->numSSEChars; c++)
         {
-            m1 = _mm512_broadcastss_ps (&tiPL[AA]);
-            m2 = _mm512_broadcastss_ps (&tiPR[AA]);
-            m3 = _mm512_mul_ps (m1, clL[A]);
-            m4 = _mm512_mul_ps (m2, clR[A]);
+            //m1 = _mm512_broadcastss_ps (&tiPL[AA]);
+            //m2 = _mm512_broadcastss_ps (&tiPR[AA]);
+            m3 = _mm512_mul_ps (_mm512_set1_ps(tiPL[AA]), clL[A]);
+            m4 = _mm512_mul_ps (_mm512_set1_ps(tiPR[AA]), clR[A]);
             
             m1 = _mm512_broadcastss_ps (&tiPL[AC]);
             m2 = _mm512_broadcastss_ps (&tiPR[AC]);
