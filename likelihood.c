@@ -1417,119 +1417,175 @@ int CondLikeDown_NUC4_SSE (TreeNode *p, int division, int chain)
     {
         for (c=0; c<m->numSSEChars; c++)
         {
-            m1 = _mm512_broadcastss_ps (&tiPL[AA]);
-            m2 = _mm512_broadcastss_ps (&tiPR[AA]);
-            m5 = _mm512_mul_ps (m1, clL[A]);
-            m6 = _mm512_mul_ps (m2, clR[A]);
+            // m1 = _mm512_broadcastss_ps (&tiPL[AA]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[AA]);
+            // m5 = _mm512_mul_ps (m1, clL[A]);
+            // m6 = _mm512_mul_ps (m2, clR[A]);
             
-            m1 = _mm512_broadcastss_ps (&tiPL[AC]);
-            m2 = _mm512_broadcastss_ps (&tiPR[AC]);
-            m3 = _mm512_mul_ps (m1, clL[C]);
-            m4 = _mm512_mul_ps (m2, clR[C]);
-            m5 = _mm512_add_ps (m3, m5);
-            m6 = _mm512_add_ps (m4, m6);
+            // m1 = _mm512_broadcastss_ps (&tiPL[AC]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[AC]);
+            // m3 = _mm512_mul_ps (m1, clL[C]);
+            // m4 = _mm512_mul_ps (m2, clR[C]);
+            // m5 = _mm512_add_ps (m3, m5);
+            // m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcastss_ps (&tiPL[AG]);
-            m2 = _mm512_broadcastss_ps (&tiPR[AG]);
-            m3 = _mm512_mul_ps (m1, clL[G]);
-            m4 = _mm512_mul_ps (m2, clR[G]);
-            m5 = _mm512_add_ps (m3, m5);
-            m6 = _mm512_add_ps (m4, m6);
+            // m1 = _mm512_broadcastss_ps (&tiPL[AG]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[AG]);
+            // m3 = _mm512_mul_ps (m1, clL[G]);
+            // m4 = _mm512_mul_ps (m2, clR[G]);
+            // m5 = _mm512_add_ps (m3, m5);
+            // m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcastss_ps (&tiPL[AT]);
-            m2 = _mm512_broadcastss_ps (&tiPR[AT]);
-            m3 = _mm512_mul_ps (m1, clL[T]);
-            m4 = _mm512_mul_ps (m2, clR[T]);
-            m5 = _mm512_add_ps (m3, m5);
-            m6 = _mm512_add_ps (m4, m6);
+            // m1 = _mm512_broadcastss_ps (&tiPL[AT]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[AT]);
+            // m3 = _mm512_mul_ps (m1, clL[T]);
+            // m4 = _mm512_mul_ps (m2, clR[T]);
+            // m5 = _mm512_add_ps (m3, m5);
+            // m6 = _mm512_add_ps (m4, m6);
             
-            *clP++ = _mm512_mul_ps (m5, m6);
+            // *clP++ = _mm512_mul_ps (m5, m6);
 
 
-            m1 = _mm512_broadcastss_ps (&tiPL[CA]);
-            m2 = _mm512_broadcastss_ps (&tiPR[CA]);
-            m5 = _mm512_mul_ps (m1, clL[A]);
-            m6 = _mm512_mul_ps (m2, clR[A]);
+            // m1 = _mm512_broadcastss_ps (&tiPL[CA]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[CA]);
+            // m5 = _mm512_mul_ps (m1, clL[A]);
+            // m6 = _mm512_mul_ps (m2, clR[A]);
             
-            m1 = _mm512_broadcastss_ps (&tiPL[CC]);
-            m2 = _mm512_broadcastss_ps (&tiPR[CC]);
-            m3 = _mm512_mul_ps (m1, clL[C]);
-            m4 = _mm512_mul_ps (m2, clR[C]);
-            m5 = _mm512_add_ps (m3, m5);
-            m6 = _mm512_add_ps (m4, m6);
+            // m1 = _mm512_broadcastss_ps (&tiPL[CC]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[CC]);
+            // m3 = _mm512_mul_ps (m1, clL[C]);
+            // m4 = _mm512_mul_ps (m2, clR[C]);
+            // m5 = _mm512_add_ps (m3, m5);
+            // m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcastss_ps (&tiPL[CG]);
-            m2 = _mm512_broadcastss_ps (&tiPR[CG]);
-            m3 = _mm512_mul_ps (m1, clL[G]);
-            m4 = _mm512_mul_ps (m2, clR[G]);
-            m5 = _mm512_add_ps (m3, m5);
-            m6 = _mm512_add_ps (m4, m6);
+            // m1 = _mm512_broadcastss_ps (&tiPL[CG]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[CG]);
+            // m3 = _mm512_mul_ps (m1, clL[G]);
+            // m4 = _mm512_mul_ps (m2, clR[G]);
+            // m5 = _mm512_add_ps (m3, m5);
+            // m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcastss_ps (&tiPL[CT]);
-            m2 = _mm512_broadcastss_ps (&tiPR[CT]);
-            m3 = _mm512_mul_ps (m1, clL[T]);
-            m4 = _mm512_mul_ps (m2, clR[T]);
-            m5 = _mm512_add_ps (m3, m5);
-            m6 = _mm512_add_ps (m4, m6);
+            // m1 = _mm512_broadcastss_ps (&tiPL[CT]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[CT]);
+            // m3 = _mm512_mul_ps (m1, clL[T]);
+            // m4 = _mm512_mul_ps (m2, clR[T]);
+            // m5 = _mm512_add_ps (m3, m5);
+            // m6 = _mm512_add_ps (m4, m6);
             
-            *clP++ = _mm512_mul_ps (m5, m6);
+            // *clP++ = _mm512_mul_ps (m5, m6);
             
-            m1 = _mm512_broadcastss_ps (&tiPL[GA]);
-            m2 = _mm512_broadcastss_ps (&tiPR[GA]);
-            m5 = _mm512_mul_ps (m1, clL[A]);
-            m6 = _mm512_mul_ps (m2, clR[A]);
+            // m1 = _mm512_broadcastss_ps (&tiPL[GA]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[GA]);
+            // m5 = _mm512_mul_ps (m1, clL[A]);
+            // m6 = _mm512_mul_ps (m2, clR[A]);
             
-            m1 = _mm512_broadcastss_ps (&tiPL[GC]);
-            m2 = _mm512_broadcastss_ps (&tiPR[GC]);
-            m3 = _mm512_mul_ps (m1, clL[C]);
-            m4 = _mm512_mul_ps (m2, clR[C]);
-            m5 = _mm512_add_ps (m3, m5);
-            m6 = _mm512_add_ps (m4, m6);
+            // m1 = _mm512_broadcastss_ps (&tiPL[GC]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[GC]);
+            // m3 = _mm512_mul_ps (m1, clL[C]);
+            // m4 = _mm512_mul_ps (m2, clR[C]);
+            // m5 = _mm512_add_ps (m3, m5);
+            // m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcastss_ps (&tiPL[GG]);
-            m2 = _mm512_broadcastss_ps (&tiPR[GG]);
-            m3 = _mm512_mul_ps (m1, clL[G]);
-            m4 = _mm512_mul_ps (m2, clR[G]);
-            m5 = _mm512_add_ps (m3, m5);
-            m6 = _mm512_add_ps (m4, m6);
+            // m1 = _mm512_broadcastss_ps (&tiPL[GG]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[GG]);
+            // m3 = _mm512_mul_ps (m1, clL[G]);
+            // m4 = _mm512_mul_ps (m2, clR[G]);
+            // m5 = _mm512_add_ps (m3, m5);
+            // m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcastss_ps (&tiPL[GT]);
-            m2 = _mm512_broadcastss_ps (&tiPR[GT]);
-            m3 = _mm512_mul_ps (m1, clL[T]);
-            m4 = _mm512_mul_ps (m2, clR[T]);
-            m5 = _mm512_add_ps (m3, m5);
-            m6 = _mm512_add_ps (m4, m6);
+            // m1 = _mm512_broadcastss_ps (&tiPL[GT]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[GT]);
+            // m3 = _mm512_mul_ps (m1, clL[T]);
+            // m4 = _mm512_mul_ps (m2, clR[T]);
+            // m5 = _mm512_add_ps (m3, m5);
+            // m6 = _mm512_add_ps (m4, m6);
             
-            *clP++ = _mm512_mul_ps (m5, m6);
+            // *clP++ = _mm512_mul_ps (m5, m6);
             
-            m1 = _mm512_broadcastss_ps (&tiPL[TA]);
-            m2 = _mm512_broadcastss_ps (&tiPR[TA]);
-            m5 = _mm512_mul_ps (m1, clL[A]);
-            m6 = _mm512_mul_ps (m2, clR[A]);
+            // m1 = _mm512_broadcastss_ps (&tiPL[TA]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[TA]);
+            // m5 = _mm512_mul_ps (m1, clL[A]);
+            // m6 = _mm512_mul_ps (m2, clR[A]);
             
-            m1 = _mm512_broadcastss_ps (&tiPL[TC]);
-            m2 = _mm512_broadcastss_ps (&tiPR[TC]);
-            m3 = _mm512_mul_ps (m1, clL[C]);
-            m4 = _mm512_mul_ps (m2, clR[C]);
-            m5 = _mm512_add_ps (m3, m5);
-            m6 = _mm512_add_ps (m4, m6);
+            // m1 = _mm512_broadcastss_ps (&tiPL[TC]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[TC]);
+            // m3 = _mm512_mul_ps (m1, clL[C]);
+            // m4 = _mm512_mul_ps (m2, clR[C]);
+            // m5 = _mm512_add_ps (m3, m5);
+            // m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcastss_ps (&tiPL[TG]);
-            m2 = _mm512_broadcastss_ps (&tiPR[TG]);
-            m3 = _mm512_mul_ps (m1, clL[G]);
-            m4 = _mm512_mul_ps (m2, clR[G]);
-            m5 = _mm512_add_ps (m3, m5);
-            m6 = _mm512_add_ps (m4, m6);
+            // m1 = _mm512_broadcastss_ps (&tiPL[TG]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[TG]);
+            // m3 = _mm512_mul_ps (m1, clL[G]);
+            // m4 = _mm512_mul_ps (m2, clR[G]);
+            // m5 = _mm512_add_ps (m3, m5);
+            // m6 = _mm512_add_ps (m4, m6);
             
-            m1 = _mm512_broadcastss_ps (&tiPL[TT]);
-            m2 = _mm512_broadcastss_ps (&tiPR[TT]);
-            m3 = _mm512_mul_ps (m1, clL[T]);
-            m4 = _mm512_mul_ps (m2, clR[T]);
-            m5 = _mm512_add_ps (m3, m5);
-            m6 = _mm512_add_ps (m4, m6);
+            // m1 = _mm512_broadcastss_ps (&tiPL[TT]);
+            // m2 = _mm512_broadcastss_ps (&tiPR[TT]);
+            // m3 = _mm512_mul_ps (m1, clL[T]);
+            // m4 = _mm512_mul_ps (m2, clR[T]);
+            // m5 = _mm512_add_ps (m3, m5);
+            // m6 = _mm512_add_ps (m4, m6);
             
-            *clP++ = _mm512_mul_ps (m5, m6);
+            // *clP++ = _mm512_mul_ps (m5, m6);
+ 
+
+            m3 = _mm512_mul_ps (_mm512_set1_ps(tiPL[AA]), clL[A]);
+            m4 = _mm512_mul_ps (_mm512_set1_ps(tiPR[AA]), clR[A]);
+
+            m3 = _mm512_fmadd_ps (_mm512_set1_ps(tiPL[AC]), clL[C], m3);
+            m4 = _mm512_fmadd_ps (_mm512_set1_ps(tiPR[AC]), clR[C], m4);
+
+            m3 = _mm512_fmadd_ps (_mm512_set1_ps(tiPL[AG]), clL[G], m3);
+            m4 = _mm512_fmadd_ps (_mm512_set1_ps(tiPR[AG]), clR[G], m4);
+
+            m3 = _mm512_fmadd_ps (_mm512_set1_ps(tiPL[AT]), clL[T], m3);
+            m4 = _mm512_fmadd_ps (_mm512_set1_ps(tiPR[AT]), clR[T], m4);
             
+            *clP++ = _mm512_mul_ps (m3, m4);
+
+            m3 = _mm512_mul_ps (_mm512_set1_ps(tiPL[CA]), clL[A]);
+            m4 = _mm512_mul_ps (_mm512_set1_ps(tiPR[CA]), clR[A]);
+            
+            m3 = _mm512_fmadd_ps (_mm512_set1_ps(tiPL[CC]), clL[C], m3);
+            m4 = _mm512_fmadd_ps (_mm512_set1_ps(tiPR[CC]), clR[C], m4);
+            
+            m3 = _mm512_fmadd_ps (_mm512_set1_ps(tiPL[CG]), clL[G], m3);
+            m4 = _mm512_fmadd_ps (_mm512_set1_ps(tiPR[CG]), clR[G], m4);
+            
+            m3 = _mm512_fmadd_ps (_mm512_set1_ps(tiPL[CT]), clL[T], m3);
+            m4 = _mm512_fmadd_ps (_mm512_set1_ps(tiPR[CT]), clR[T], m4);
+            
+            *clP++ = _mm512_mul_ps (m3, m4);
+
+            m3 = _mm512_mul_ps (_mm512_set1_ps(tiPL[GA]), clL[A]);
+            m4 = _mm512_mul_ps (_mm512_set1_ps(tiPR[GA]), clR[A]);
+            
+            m3 = _mm512_fmadd_ps (_mm512_set1_ps(tiPL[GC]), clL[C], m3);
+            m4 = _mm512_fmadd_ps (_mm512_set1_ps(tiPR[GC]), clR[C], m4);
+            
+            m3 = _mm512_fmadd_ps (_mm512_set1_ps(tiPL[GG]), clL[G], m3);
+            m4 = _mm512_fmadd_ps (_mm512_set1_ps(tiPR[GG]), clR[G], m4);
+            
+            m3 = _mm512_fmadd_ps (_mm512_set1_ps(tiPL[GT]), clL[T], m3);
+            m4 = _mm512_fmadd_ps (_mm512_set1_ps(tiPR[GT]), clR[T], m4);
+            
+            *clP++ = _mm512_mul_ps (m3, m4);
+
+            m3 = _mm512_mul_ps (_mm512_set1_ps(tiPL[TA]), clL[A]);
+            m4 = _mm512_mul_ps (_mm512_set1_ps(tiPR[TA]), clR[A]);
+            
+            m3 = _mm512_fmadd_ps (_mm512_set1_ps(tiPL[TC]), clL[C], m3);
+            m4 = _mm512_fmadd_ps (_mm512_set1_ps(tiPR[TC]), clR[C], m4);
+            
+            m3 = _mm512_fmadd_ps (_mm512_set1_ps(tiPL[TG]), clL[G], m3);
+            m4 = _mm512_fmadd_ps (_mm512_set1_ps(tiPR[TG]), clR[G], m4);
+            
+            m3 = _mm512_fmadd_ps (_mm512_set1_ps(tiPL[TT]), clL[T], m3);
+            m4 = _mm512_fmadd_ps (_mm512_set1_ps(tiPR[TT]), clR[T], m4);
+            
+            *clP++ = _mm512_mul_ps (m3, m4);           
             clL += 4;
             clR += 4;
         }
@@ -5587,14 +5643,14 @@ int CondLikeScaler_NUC4_SSE (TreeNode *p, int division, int chain)
 {
     int             c, k;
     CLFlt           *scP, *lnScaler;
-    __m256          *clPtr, **clP, *scP_SSE, m1;
+    __m512          *clPtr, **clP, *scP_SSE, m1;
     ModelInfo       *m;
     
     m = &modelSettings[division];
     //chl: imp diff
     assert (p->scalerNode == YES);
     /* find conditional likelihood pointers */
-    clPtr = (__m256 *) m->condLikes[m->condLikeIndex[chain][p->index]];
+    clPtr = (__m512 *) m->condLikes[m->condLikeIndex[chain][p->index]];
     clP   = m->clP_AVX;
     for (k=0; k<m->numGammaCats; k++)
     {
@@ -5604,7 +5660,7 @@ int CondLikeScaler_NUC4_SSE (TreeNode *p, int division, int chain)
     
     /* find node scalers */
     scP = m->scalers[m->nodeScalerIndex[chain][p->index]];
-    scP_SSE = (__m256 *) scP;
+    scP_SSE = (__m512 *) scP;
     
     /* find site scalers */
     lnScaler = m->scalers[m->siteScalerIndex[chain]];
@@ -5616,21 +5672,25 @@ int CondLikeScaler_NUC4_SSE (TreeNode *p, int division, int chain)
 
         for (k=0; k<m->numGammaCats; k++)
         {
-            m1 = _mm256_max_ps (m1, clP[k][A]);
-            m1 = _mm256_max_ps (m1, clP[k][C]);
-            m1 = _mm256_max_ps (m1, clP[k][G]);
-            m1 = _mm256_max_ps (m1, clP[k][T]);
+            // m1 = _mm512_max_ps (m1, clP[k][A]);
+            // m1 = _mm512_max_ps (m1, clP[k][C]);
+            // m1 = _mm512_max_ps (m1, clP[k][G]);
+            // m1 = _mm512_max_ps (m1, clP[k][T]);
+            m1 = _mm512_max_ps (m1, clP[k][A]);
+            m1 = _mm512_max_ps (m1, clP[k][C]);
+            m1 = _mm512_max_ps (m1, clP[k][G]);
+            m1 = _mm512_max_ps (m1, clP[k][T]);
         }
         
         for (k=0; k<m->numGammaCats; k++)
         {
-            *clP[k] = _mm256_div_ps (*clP[k], m1);
+            *clP[k] = _mm512_div_ps (*clP[k], m1);
             clP[k]++;
-            *clP[k] = _mm256_div_ps (*clP[k], m1);
+            *clP[k] = _mm512_div_ps (*clP[k], m1);
             clP[k]++;
-            *clP[k] = _mm256_div_ps (*clP[k], m1);
+            *clP[k] = _mm512_div_ps (*clP[k], m1);
             clP[k]++;
-            *clP[k] = _mm256_div_ps (*clP[k], m1);
+            *clP[k] = _mm512_div_ps (*clP[k], m1);
             clP[k]++;
         }
         
