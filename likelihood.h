@@ -47,6 +47,7 @@ int       CondLikeDown_Bin (TreeNode *p, int division, int chain);
 #if defined (SSE_ENABLED)
 int       CondLikeDown_Bin_SSE (TreeNode *p, int division, int chain);
 #endif
+////////////////////////////////////////////////////////////////////////////////
 int       CondLikeDown_Gen (TreeNode *p, int division, int chain);
 #if defined (SSE_ENABLED)
 int       CondLikeDown_Gen_SSE (TreeNode *p, int division, int chain);
@@ -68,6 +69,7 @@ int       CondLikeDown_NY98 (TreeNode *p, int division, int chain);
 int       CondLikeDown_NY98_SSE (TreeNode *p, int division, int chain);
 #endif
 int       CondLikeDown_Std (TreeNode *p, int division, int chain);
+////////////////////////////////////////////////////////////////////////////////
 int       CondLikeRoot_Bin (TreeNode *p, int division, int chain);
 #if defined (SSE_ENABLED)
 int       CondLikeRoot_Bin_SSE (TreeNode *p, int division, int chain);
@@ -90,6 +92,7 @@ int       CondLikeRoot_NY98 (TreeNode *p, int division, int chain);
 int       CondLikeRoot_NY98_SSE (TreeNode *p, int division, int chain);
 #endif
 int       CondLikeRoot_Std (TreeNode *p, int division, int chain);
+////////////////////////////////////////////////////////////////////////////////
 int       CondLikeScaler_Gen (TreeNode *p, int division, int chain);
 #if defined (SSE_ENABLED)
 int       CondLikeScaler_Gen_SSE (TreeNode *p, int division, int chain);
@@ -105,6 +108,7 @@ int       CondLikeScaler_NY98 (TreeNode *p, int division, int chain);
 int       CondLikeScaler_NY98_SSE (TreeNode *p, int division, int chain);
 #endif
 int       CondLikeScaler_Std (TreeNode *p, int division, int chain);
+////////////////////////////////////////////////////////////////////////////////
 int       CondLikeUp_Bin (TreeNode *p, int division, int chain);
 int       CondLikeUp_Gen (TreeNode *p, int division, int chain);
 int       CondLikeUp_NUC4 (TreeNode *p, int division, int chain);

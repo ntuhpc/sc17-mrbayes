@@ -55,7 +55,7 @@
 
 /* Set FMA_ENABLED if FMA SIMD extensions available. */
 #if defined(HAVE_FMA3) || defined(HAVE_FMA4)
-#define FMA_ENABLED 1
+#define FMA_ENABLED
 #endif
 
 /* uncomment the following line when releasing, also modify the VERSION_NUMBER below */

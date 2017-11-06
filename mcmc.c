@@ -5978,6 +5978,7 @@ int InitChainCondLikes (void)
                     {
                     m->clP_SSE = (__m128 **) SafeMalloc(m->numTiCats * sizeof(__m128 *));
                     //chl: add clP_AVX initialization
+                    //ziji : further changes data type from __m256 to __m512
                     m->clP_AVX = (__m512 **) SafeMalloc(m->numTiCats * sizeof(__m512 *));
                     if (!m->clP_SSE)
                         return (ERROR);

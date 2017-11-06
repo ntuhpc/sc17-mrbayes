@@ -61,9 +61,10 @@ int       RemoveNodeScalers(TreeNode *p, int division, int chain);
 #if defined (SSE_ENABLED)
 int       RemoveNodeScalers_SSE(TreeNode *p, int division, int chain);
 #endif
-#if defined (AVX_ENABLED)
-int       RemoveNodeScalers_AVX(TreeNode *p, int division, int chain);
-#endif
+// The following is not defined in this version
+// #if defined (AVX_ENABLED) 
+// int       RemoveNodeScalers_AVX(TreeNode *p, int division, int chain);
+// #endif
 void      ResetSiteScalers (ModelInfo *m, int chain);
 int       UpDateCijk (int whichPart, int whichChain);
 
@@ -1394,7 +1395,7 @@ int CondLikeDown_NUC4_SSE (TreeNode *p, int division, int chain)
     int             c, k;
     CLFlt           *pL, *pR, *tiPL, *tiPR;
     __m512          *clL, *clR, *clP;
-    __m512          m1, m2, m3, m4, m5, m6;
+    __m512          m3, m4;
     ModelInfo       *m;
     
     m = &modelSettings[division];
@@ -8659,7 +8660,7 @@ int RemoveNodeScalers (TreeNode *p, int division, int chain)
 int RemoveNodeScalers_SSE (TreeNode *p, int division, int chain)
 {
     int             c;
-    __m256          *scP_SSE, *lnScaler_SSE;
+    __m512          *scP_SSE, *lnScaler_SSE;
     ModelInfo       *m;
     
     m = &modelSettings[division];
@@ -8668,15 +8669,15 @@ int RemoveNodeScalers_SSE (TreeNode *p, int division, int chain)
     assert (m->scalersSet[chain][p->index] == YES);
 
     /* find scalers */
-    scP_SSE = (__m256*)(m->scalers[m->nodeScalerIndex[chain][p->index]]);
+    scP_SSE = (__m512*)(m->scalers[m->nodeScalerIndex[chain][p->index]]);
     
     /* find site scalers */
-    lnScaler_SSE = (__m256*)(m->scalers[m->siteScalerIndex[chain]]);
+    lnScaler_SSE = (__m512*)(m->scalers[m->siteScalerIndex[chain]]);
     
     /* remove scalers */
     for (c=0; c<m->numSSEChars; c++)
     {
-        lnScaler_SSE[c] = _mm256_sub_ps(lnScaler_SSE[c], scP_SSE[c]);
+        lnScaler_SSE[c] = _mm512_sub_ps(lnScaler_SSE[c], scP_SSE[c]);
     }
     
     return NO_ERROR;
