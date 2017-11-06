@@ -5978,7 +5978,7 @@ int InitChainCondLikes (void)
                     {
                     m->clP_SSE = (__m128 **) SafeMalloc(m->numTiCats * sizeof(__m128 *));
                     //chl: add clP_AVX initialization
-                    m->clP_AVX = (__m512 **) SafeMalloc(m->numTiCats * sizeof(__m256 *));
+                    m->clP_AVX = (__m512 **) SafeMalloc(m->numTiCats * sizeof(__m512 *));
                     if (!m->clP_SSE)
                         return (ERROR);
                     m->lnL_SSE  = AlignedMalloc (m->numSSEChars * FLOATS_PER_VEC * sizeof(CLFlt*), 32);

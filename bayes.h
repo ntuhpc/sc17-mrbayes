@@ -49,9 +49,9 @@
 #endif
 
 /* Set AVX_ENABLED if AVX SIMD extensions available. */
-// #ifdef HAVE_AVX
-// #define AVX_ENABLED
-// #endif
+#ifdef HAVE_AVX
+#define AVX_ENABLED
+#endif
 
 /* Set FMA_ENABLED if FMA SIMD extensions available. */
 #if defined(HAVE_FMA3) || defined(HAVE_FMA4)

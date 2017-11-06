@@ -34,6 +34,7 @@
 /* #undef WINDOWS_VERSION */
 
 /* Define if used on a 64bit cpu */
+#define _64BIT 1
 /* #undef _64BIT */
 
 /* Define to enable beagle library */
