@@ -5911,7 +5911,7 @@ int InitChainCondLikes (void)
                         numReps = m->numGammaCats * m->numOmegaCats;
                     k = m->numSSEChars * FLOATS_PER_VEC * m->numModelStates * numReps;
                     //chl: has changed Allignment from 16 to 32
-                    m->condLikes[i] = (CLFlt*) AlignedMalloc (k * sizeof(CLFlt), 32);
+                    m->condLikes[i] = (CLFlt*) AlignedMalloc (k * sizeof(CLFlt), 64);
                     if (!m->condLikes[i])
                         return (ERROR);
 
@@ -5942,7 +5942,8 @@ int InitChainCondLikes (void)
                 if (m->useSSE == YES)
                     {
                     /* allocate space with padding */
-                    m->scalers[i] = (CLFlt*) AlignedMalloc (m->numSSEChars * FLOATS_PER_VEC * sizeof(CLFlt), 16);
+                    //ziji:increase size from 16(sse) to 64 (avx512)
+                    m->scalers[i] = (CLFlt*) AlignedMalloc (m->numSSEChars * FLOATS_PER_VEC * sizeof(CLFlt), 64);
                     if (!m->scalers[i])
                         return (ERROR);
                     for (j=0; j<m->numSSEChars*FLOATS_PER_VEC; j++)
@@ -5982,8 +5983,8 @@ int InitChainCondLikes (void)
                     m->clP_AVX = (__m512 **) SafeMalloc(m->numTiCats * sizeof(__m512 *));
                     if (!m->clP_SSE)
                         return (ERROR);
-                    m->lnL_SSE  = AlignedMalloc (m->numSSEChars * FLOATS_PER_VEC * sizeof(CLFlt*), 32);
-                    m->lnLI_SSE = AlignedMalloc (m->numSSEChars * FLOATS_PER_VEC * sizeof(CLFlt*), 32);
+                    m->lnL_SSE  = AlignedMalloc (m->numSSEChars * FLOATS_PER_VEC * sizeof(CLFlt*), 64);
+                    m->lnLI_SSE = AlignedMalloc (m->numSSEChars * FLOATS_PER_VEC * sizeof(CLFlt*), 64);
                     if (!m->lnL_SSE || !m->lnLI_SSE)
                         return (ERROR);
                     }
@@ -6564,7 +6565,8 @@ int InitInvCondLikes (void)
         usingInvCondLikes = YES;
 #   if defined (SSE_ENABLED)
         c1 = m->numSSEChars * FLOATS_PER_VEC * m->numModelStates;
-        m->invCondLikes = (CLFlt *) AlignedMalloc (c1 * sizeof(CLFlt), 16);
+        //Ziji : cahnged to 64bits for using avx512
+        m->invCondLikes = (CLFlt *) AlignedMalloc (c1 * sizeof(CLFlt), 64);
         for (i=0; i<c1; i++)
             m->invCondLikes[i] = 0.0f;
 #   else
