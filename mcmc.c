@@ -5942,7 +5942,7 @@ int InitChainCondLikes (void)
                 if (m->useSSE == YES)
                     {
                     /* allocate space with padding */
-                    m->scalers[i] = (CLFlt*) AlignedMalloc (m->numSSEChars * FLOATS_PER_VEC * sizeof(CLFlt), 16);
+                    m->scalers[i] = (CLFlt*) AlignedMalloc (m->numSSEChars * FLOATS_PER_VEC * sizeof(CLFlt), 32);
                     if (!m->scalers[i])
                         return (ERROR);
                     for (j=0; j<m->numSSEChars*FLOATS_PER_VEC; j++)
@@ -6563,7 +6563,7 @@ int InitInvCondLikes (void)
         usingInvCondLikes = YES;
 #   if defined (SSE_ENABLED)
         c1 = m->numSSEChars * FLOATS_PER_VEC * m->numModelStates;
-        m->invCondLikes = (CLFlt *) AlignedMalloc (c1 * sizeof(CLFlt), 16);
+        m->invCondLikes = (CLFlt *) AlignedMalloc (c1 * sizeof(CLFlt), 32);
         for (i=0; i<c1; i++)
             m->invCondLikes[i] = 0.0f;
 #   else
