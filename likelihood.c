@@ -7207,14 +7207,18 @@ int Likelihood_NUC4_SSE (TreeNode *p, int division, int chain, MrBFlt *lnL, int 
         mLike = _mm256_setzero_ps ();
         for (k=0; k<m->numGammaCats; k++)
         {
-            m1    = _mm256_mul_ps (clP[k][A], mA);
-            mLike = _mm256_add_ps (mLike, m1);
-            m1    = _mm256_mul_ps (clP[k][C], mC);
-            mLike = _mm256_add_ps (mLike, m1);
-            m1    = _mm256_mul_ps (clP[k][G], mG);
-            mLike = _mm256_add_ps (mLike, m1);
-            m1    = _mm256_mul_ps (clP[k][T], mT);
-            mLike = _mm256_add_ps (mLike, m1);
+            // m1    = _mm256_mul_ps (clP[k][A], mA);
+            // mLike = _mm256_add_ps (mLike, m1);
+            // m1    = _mm256_mul_ps (clP[k][C], mC);
+            // mLike = _mm256_add_ps (mLike, m1);
+            // m1    = _mm256_mul_ps (clP[k][G], mG);
+            // mLike = _mm256_add_ps (mLike, m1);
+            // m1    = _mm256_mul_ps (clP[k][T], mT);
+            // mLike = _mm256_add_ps (mLike, m1);
+            mLike = _mm256_fmadd_ps (clP[k][A], mA,mLike);
+            mLike = _mm256_fmadd_ps (clP[k][C], mC,mLike);
+            mLike = _mm256_fmadd_ps (clP[k][G], mG,mLike);
+            mLike = _mm256_fmadd_ps (clP[k][T], mT,mLike);
             clP[k] += 4;
         }
         mLike = _mm256_mul_ps (mLike, mFreq);
@@ -7229,15 +7233,21 @@ int Likelihood_NUC4_SSE (TreeNode *p, int division, int chain, MrBFlt *lnL, int 
     {
         for (c=0; c<m->numSSEChars; c++)
         {
-            mLike = _mm256_mul_ps (clInvar[A], mA);
-            m1    = _mm256_mul_ps (clInvar[C], mC);
-            mLike = _mm256_add_ps (mLike, m1);
-            m1    = _mm256_mul_ps (clInvar[G], mG);
-            mLike = _mm256_add_ps (mLike, m1);
-            m1    = _mm256_mul_ps (clInvar[T], mT);
-            mLike = _mm256_add_ps (mLike, m1);
-            mLike = _mm256_mul_ps (mLike, mPInvar);
+            // mLike = _mm256_mul_ps (clInvar[A], mA);
+            // m1    = _mm256_mul_ps (clInvar[C], mC);
+            // mLike = _mm256_add_ps (mLike, m1);
+            // m1    = _mm256_mul_ps (clInvar[G], mG);
+            // mLike = _mm256_add_ps (mLike, m1);
+            // m1    = _mm256_mul_ps (clInvar[T], mT);
+            // mLike = _mm256_add_ps (mLike, m1);
+            // mLike = _mm256_mul_ps (mLike, mPInvar);
             
+            mLike = _mm256_fmadd_ps (clP[k][A], mA,mLike);
+            mLike = _mm256_fmadd_ps (clP[k][C], mC,mLike);
+            mLike = _mm256_fmadd_ps (clP[k][G], mG,mLike);
+            mLike = _mm256_fmadd_ps (clP[k][T], mT,mLike);
+            mLike = _mm256_mul_ps (mLike, mPInvar);
+
             _mm256_store_ps (lnLI_SSE, mLike);
             clInvar += 4;
             //chl: imp diff
